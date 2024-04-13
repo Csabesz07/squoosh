@@ -1,11 +1,12 @@
 import { inputFieldChecked } from 'client/lazy-app/util';
-import { EncodeOptions } from '../shared/meta';
+import { Compressors, EncodeOptions } from '../shared/meta';
 import type WorkerBridge from 'client/lazy-app/worker-bridge';
 import { h, Component } from 'preact';
 import { inputFieldValueAsNumber, preventDefault } from 'client/lazy-app/util';
 import * as style from 'client/lazy-app/Compress/Options/style.css';
 import Range from 'client/lazy-app/Compress/Options/Range';
 import Checkbox from 'client/lazy-app/Compress/Options/Checkbox';
+import Select from 'client/lazy-app/Compress/Options/Select';
 
 export async function encode(
   signal: AbortSignal,
@@ -30,7 +31,9 @@ export class Options extends Component<Props, {}> {
     const options: EncodeOptions = {
       level: inputFieldValueAsNumber(form.level),
       interlace: inputFieldChecked(form.interlace),
+      compressor: inputFieldValueAsNumber(form.compressor),
     };
+
     this.props.onChange(options);
   };
 
@@ -57,6 +60,13 @@ export class Options extends Component<Props, {}> {
             Effort:
           </Range>
         </div>
+        <label class={style.optionTextFirst}>
+          Compressor:
+          <Select name="compressor" onChange={this.onChange}>
+            <option value={Compressors.default}>Default</option>
+            <option value={Compressors.zopfli}>Zopfli</option>
+          </Select>
+        </label>
       </form>
     );
   }

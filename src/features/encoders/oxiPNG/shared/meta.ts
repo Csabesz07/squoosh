@@ -10,9 +10,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+export const enum Compressors {
+  default,
+  zopfli,
+}
+
 export interface EncodeOptions {
   level: number;
   interlace: boolean;
+  compressor: number;
 }
 
 export const label = 'OxiPNG';
@@ -22,4 +28,5 @@ export const extension = 'png';
 export const defaultOptions: EncodeOptions = {
   level: 2,
   interlace: false,
+  compressor: 0,
 };
