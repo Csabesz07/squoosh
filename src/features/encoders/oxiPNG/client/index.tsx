@@ -1,5 +1,5 @@
 import { inputFieldChecked } from 'client/lazy-app/util';
-import { Compressors, EncodeOptions } from '../shared/meta';
+import { defaultOptions, Deflaters, EncodeOptions } from '../shared/meta';
 import type WorkerBridge from 'client/lazy-app/worker-bridge';
 import { h, Component } from 'preact';
 import { inputFieldValueAsNumber, preventDefault } from 'client/lazy-app/util';
@@ -31,7 +31,15 @@ export class Options extends Component<Props, {}> {
     const options: EncodeOptions = {
       level: inputFieldValueAsNumber(form.level),
       interlace: inputFieldChecked(form.interlace),
-      compressor: inputFieldValueAsNumber(form.compressor),
+      deflater: inputFieldValueAsNumber(form.deflater),
+      iterations:
+        inputFieldValueAsNumber(form.deflater) == Deflaters.zopfli
+          ? inputFieldValueAsNumber(form.iterations, 1)
+          : defaultOptions.iterations,
+      compressionLevel:
+        inputFieldValueAsNumber(form.deflater) == Deflaters.libdeflater
+          ? inputFieldValueAsNumber(form.compressionLevel, 1)
+          : defaultOptions.compressionLevel,
     };
 
     this.props.onChange(options);
@@ -61,12 +69,44 @@ export class Options extends Component<Props, {}> {
           </Range>
         </div>
         <label class={style.optionTextFirst}>
-          Compressor:
-          <Select name="compressor" onChange={this.onChange}>
-            <option value={Compressors.default}>Default</option>
-            <option value={Compressors.zopfli}>Zopfli</option>
+          Deflater:
+          <Select
+            name="deflater"
+            value={options.deflater}
+            onChange={this.onChange}
+          >
+            <option value={Deflaters.libdeflater}>Libdeflater</option>
+            <option value={Deflaters.zopfli}>Zopfli</option>
           </Select>
         </label>
+        {this.props.options.deflater == Deflaters.libdeflater && (
+          <div class={style.optionOneCell}>
+            <Range
+              name="compressionLevel"
+              min="1"
+              max="12"
+              step="1"
+              value={options.compressionLevel}
+              onInput={this.onChange}
+            >
+              Compression level:
+            </Range>
+          </div>
+        )}
+        {this.props.options.deflater == Deflaters.zopfli && (
+          <div class={style.optionOneCell}>
+            <Range
+              name="iterations"
+              min="1"
+              max="15"
+              step="1"
+              value={options.iterations}
+              onInput={this.onChange}
+            >
+              Iterations:
+            </Range>
+          </div>
+        )}
       </form>
     );
   }
