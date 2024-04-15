@@ -1,14 +1,29 @@
 /* tslint:disable */
 /* eslint-disable */
+
+import { Deflaters } from "features/encoders/oxiPNG/shared/meta";
+
 /**
 * @param {Uint8ClampedArray} data
 * @param {number} width
 * @param {number} height
 * @param {number} level
 * @param {boolean} interlace
+* @param {Deflaters} deflater
+* @param {number} iterations
+* @param {number} compressionLevel
 * @returns {Uint8Array}
 */
-export function optimise(data: Uint8ClampedArray, width: number, height: number, level: number, interlace: boolean): Uint8Array;
+export function optimise(
+  data: Uint8ClampedArray, 
+  width: number, 
+  height: number, 
+  level: number, 
+  interlace: boolean,
+  deflater: Deflaters, 
+  iterations: number, 
+  compressionLevel: number,
+): Uint8Array;
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 

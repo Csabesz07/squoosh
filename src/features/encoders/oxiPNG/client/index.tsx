@@ -32,14 +32,8 @@ export class Options extends Component<Props, {}> {
       level: inputFieldValueAsNumber(form.level),
       interlace: inputFieldChecked(form.interlace),
       deflater: inputFieldValueAsNumber(form.deflater),
-      iterations:
-        inputFieldValueAsNumber(form.deflater) == Deflaters.zopfli
-          ? inputFieldValueAsNumber(form.iterations, 1)
-          : defaultOptions.iterations,
-      compressionLevel:
-        inputFieldValueAsNumber(form.deflater) == Deflaters.libdeflater
-          ? inputFieldValueAsNumber(form.compressionLevel, 1)
-          : defaultOptions.compressionLevel,
+      iterations: inputFieldValueAsNumber(form.iterations, 1),
+      compressionLevel: inputFieldValueAsNumber(form.compressionLevel, 1),
     };
 
     this.props.onChange(options);
