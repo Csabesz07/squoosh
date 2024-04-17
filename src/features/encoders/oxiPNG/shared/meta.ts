@@ -31,6 +31,6 @@ export const defaultOptions: EncodeOptions = {
   level: 2,
   interlace: false,
   deflater: Deflaters.libdeflater,
-  iterations: 1,
-  compressionLevel: 1,
+  iterations: 5,
+  compressionLevel: 11,
 };

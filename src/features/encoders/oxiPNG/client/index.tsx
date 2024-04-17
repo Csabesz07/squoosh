@@ -32,8 +32,8 @@ export class Options extends Component<Props, {}> {
       level: inputFieldValueAsNumber(form.level),
       interlace: inputFieldChecked(form.interlace),
       deflater: inputFieldValueAsNumber(form.deflater),
-      iterations: inputFieldValueAsNumber(form.iterations, 1),
-      compressionLevel: inputFieldValueAsNumber(form.compressionLevel, 1),
+      iterations: inputFieldValueAsNumber(form.iterations, 5),
+      compressionLevel: inputFieldValueAsNumber(form.compressionLevel, 11),
     };
 
     this.props.onChange(options);

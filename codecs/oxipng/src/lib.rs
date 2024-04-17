@@ -32,7 +32,7 @@ pub fn optimise(
         }
         1 => {
             options.deflate = Deflaters::Zopfli {
-                iterations: Option::expect(NonZeroU8::new(iterations), "Should be larger than 0"),
+                iterations: Option::unwrap(NonZeroU8::new(iterations)),
             }
         }
         _ => {
