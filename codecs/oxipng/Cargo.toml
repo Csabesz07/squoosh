@@ -22,4 +22,4 @@ lto = true
 opt-level = "s"
 
 [features]
-parallel = ["oxipng/parallel", "wasm-bindgen-rayon"]
+parallel = ["oxipng/parallel", "wasm-bindgen-rayon", "oxipng/zopfli"]
