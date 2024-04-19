@@ -1,11 +1,7 @@
 declare module 'preact' {
   namespace JSX {
     interface HTMLAttributes {
-      decoding?:
-        | 'sync'
-        | 'async'
-        | 'auto'
-        | SignalLike<'sync' | 'async' | 'auto' | undefined>;
+      decoding?: 'sync' | 'async' | 'auto';
     }
   }
 }
