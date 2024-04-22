@@ -17,30 +17,23 @@ pub fn optimise(
     iterations: u8,
     compression_level: u8,
 ) -> Vec<u8> {
+    let def = match deflater {
+        0 => Deflaters::Libdeflater {
+            compression: compression_level,
+        },
+        1 => Deflaters::Zopfli {
+            iterations: NonZeroU8::new(iterations).unwrap(),
+        },
+        _ => panic!("Invalid deflater id"),
+    };
     let mut options = oxipng::Options::from_preset(level);
     options.optimize_alpha = true;
+    options.deflate = def;
     options.interlace = Some(if interlace {
         Interlacing::Adam7
     } else {
         Interlacing::None
     });
-    match deflater {
-        0 => {
-            options.deflate = Deflaters::Libdeflater {
-                compression: compression_level,
-            }
-        }
-        1 => {
-            options.deflate = Deflaters::Zopfli {
-                iterations: Option::unwrap(NonZeroU8::new(iterations)),
-            }
-        }
-        _ => {
-            options.deflate = Deflaters::Libdeflater {
-                compression: compression_level,
-            }
-        }
-    }
 
     let raw = oxipng::RawImage::new(width, height, ColorType::RGBA, BitDepth::Eight, data.0)
         .unwrap_throw();
